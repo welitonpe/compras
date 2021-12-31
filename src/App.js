@@ -1,18 +1,60 @@
 import "@clayui/css/lib/css/atlas.css";
 import ClayLayout from "@clayui/layout";
 import ClayAlert from "@clayui/alert";
-import ClayCard from "@clayui/card";
 import ClayTable from "@clayui/table";
 import ClayForm, { ClayInput, ClaySelect } from "@clayui/form";
 import ClayButton from "@clayui/button";
 import { useEffect, useState } from "react";
+
+const Test = (props) => {
+  return (
+    <>
+      {/* {JSON.stringify(lista)} */}
+      <ClayTable>
+        <ClayTable.Head>
+          <ClayTable.Row>
+            <ClayTable.Cell headingCell>{"Desc"}</ClayTable.Cell>
+            <ClayTable.Cell headingCell>{"Qtd"}</ClayTable.Cell>
+            <ClayTable.Cell headingCell>{"V.Unit"}</ClayTable.Cell>
+            <ClayTable.Cell headingCell>{"V.Ttoal"}</ClayTable.Cell>
+            <ClayTable.Cell headingCell>{"Remove"}</ClayTable.Cell>
+          </ClayTable.Row>
+        </ClayTable.Head>
+        <ClayTable.Body>
+          {props.lista.map((elemento, index) => {
+            return (
+              <ClayTable.Row key={index}>
+                <ClayTable.Cell headingTitle>{elemento.product}</ClayTable.Cell>
+                <ClayTable.Cell>{elemento.unitValue}</ClayTable.Cell>
+                <ClayTable.Cell>{elemento.quantity}</ClayTable.Cell>
+                <ClayTable.Cell>{elemento.totalValue}</ClayTable.Cell>
+                <ClayTable.Cell>
+                  <ClayButton
+                    displayType="warning"
+                    type="button"
+                    onClick={() => props.onRemove(props.lista, index)}
+                  >
+                    X
+                  </ClayButton>
+                </ClayTable.Cell>
+              </ClayTable.Row>
+            );
+          })}
+        </ClayTable.Body>
+      </ClayTable>
+    </>
+  );
+};
 function App() {
-  const [produto, setProduto] = useState({
+  const initialState = {
     product: "",
-    unitValue: "",
+    unitValue: 0,
     quantity: 0,
     totalValue: "false",
-  });
+  };
+  const [list, setList] = useState([]);
+  const [totalValues, setTotalValues] = useState(0);
+  const [produto, setProduto] = useState(initialState);
   const options = [
     {
       label: "Option 1",
@@ -23,14 +65,13 @@ function App() {
       value: "2",
     },
   ];
+
   useEffect(() => {
     setProduto({
       ...produto,
-      totalValue: (produto.quantity * produto.unitValue).toLocaleString(
-        "pt-BR",
-        { style: "currency", currency: "BRL" }
-      ),
+      totalValue: produto.quantity * produto.unitValue,
     });
+    fimValues();
   }, [produto.quantity, produto.unitValue]);
 
   function handleChange({ target }) {
@@ -51,13 +92,18 @@ function App() {
     }
   }
 
-  console.log(produto);
+  function removeItem(lista, key) {
+    return setList([...lista.slice(0, key), ...lista.slice(key + 1)]);
+  }
+  function fimValues() {
+    console.log(list);
+  }
 
   return (
     <div className="App">
       <ClayLayout.ContainerFluid view className="fixed">
         <ClayAlert displayType="warning" spritemap={"!"} title="">
-          <h1>{produto.totalValue || "R$ 00.00"}</h1>
+          <h1>{totalValues || "R$ 00.00"}</h1>
         </ClayAlert>
       </ClayLayout.ContainerFluid>
       <ClayLayout.ContainerFluid view>
@@ -92,16 +138,18 @@ function App() {
                 min="0.00"
                 max="10000.00"
                 step="0.01"
+                value={produto.unitValue}
               />
             </ClayInput.GroupItem>
             <ClayInput.GroupItem prepend>
               <ClayInput
                 name="quantity"
                 placeholder={"quantidade"}
-                type="text"
+                type="number"
                 value={produto.quantity}
                 onChange={handleChange}
                 className="text-center"
+                disabled
               />
             </ClayInput.GroupItem>
             <ClayInput.GroupItem shrink prepend className="">
@@ -125,7 +173,15 @@ function App() {
               </ClayButton>
             </ClayInput.GroupItem>{" "}
             <ClayInput.GroupItem shrink append>
-              <ClayButton displayType="success" type="button">
+              <ClayButton
+                displayType="success"
+                type="button"
+                onClick={() => {
+                  setList([...list, produto]);
+                  setProduto(initialState);
+                  fimValues();
+                }}
+              >
                 AD
               </ClayButton>
             </ClayInput.GroupItem>
@@ -133,30 +189,7 @@ function App() {
         </ClayForm.Group>
       </ClayLayout.ContainerFluid>
       <ClayLayout.ContainerFluid view>
-        <ClayTable>
-          <ClayTable.Head>
-            <ClayTable.Row>
-              <ClayTable.Cell headingCell>{"Desc"}</ClayTable.Cell>
-              <ClayTable.Cell headingCell>{"Qtd"}</ClayTable.Cell>
-              <ClayTable.Cell headingCell>{"V.Unit"}</ClayTable.Cell>
-              <ClayTable.Cell headingCell>{"V.Ttoal"}</ClayTable.Cell>
-              <ClayTable.Cell headingCell>{"Remove"}</ClayTable.Cell>
-            </ClayTable.Row>
-          </ClayTable.Head>
-          <ClayTable.Body>
-            <ClayTable.Row>
-              <ClayTable.Cell headingTitle>{"Sabão"}</ClayTable.Cell>
-              <ClayTable.Cell>{"2"}</ClayTable.Cell>
-              <ClayTable.Cell>{"R$ 3,50"}</ClayTable.Cell>
-              <ClayTable.Cell>{"R$ 7,00"}</ClayTable.Cell>
-              <ClayTable.Cell>
-                <ClayButton displayType="warning" type="submit">
-                  X
-                </ClayButton>
-              </ClayTable.Cell>
-            </ClayTable.Row>
-          </ClayTable.Body>
-        </ClayTable>
+        <Test lista={list} onRemove={removeItem} />
       </ClayLayout.ContainerFluid>
     </div>
   );
