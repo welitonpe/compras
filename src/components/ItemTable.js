@@ -4,7 +4,36 @@ import { GlobalContext } from "../Context/GlobalContext";
 import { useContext } from "react";
 
 const ItemTable = () => {
-  const data = useContext(GlobalContext);
+  const { list, removeItem } = useContext(GlobalContext);
+  const tableMapping = list.map((element, index) => {
+    return (
+      <ClayTable.Row key={index}>
+        <ClayTable.Cell headingTitle>{element.product}</ClayTable.Cell>
+        <ClayTable.Cell>
+          {element.unitValue.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          })}
+        </ClayTable.Cell>
+        <ClayTable.Cell>{element.quantity}</ClayTable.Cell>
+        <ClayTable.Cell>
+          {element.totalValue.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          })}
+        </ClayTable.Cell>
+        <ClayTable.Cell>
+          <ClayButton
+            displayType="warning"
+            type="button"
+            onClick={() => removeItem(index)}
+          >
+            X
+          </ClayButton>
+        </ClayTable.Cell>
+      </ClayTable.Row>
+    );
+  });
   return (
     <>
       {/* {JSON.stringify(lista)} */}
@@ -18,37 +47,7 @@ const ItemTable = () => {
             <ClayTable.Cell headingCell>{"Remove"}</ClayTable.Cell>
           </ClayTable.Row>
         </ClayTable.Head>
-        <ClayTable.Body>
-          {data.list.map((element, index) => {
-            return (
-              <ClayTable.Row key={index}>
-                <ClayTable.Cell headingTitle>{element.product}</ClayTable.Cell>
-                <ClayTable.Cell>
-                  {element.unitValue.toLocaleString("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}
-                </ClayTable.Cell>
-                <ClayTable.Cell>{element.quantity}</ClayTable.Cell>
-                <ClayTable.Cell>
-                  {element.totalValue.toLocaleString("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}
-                </ClayTable.Cell>
-                <ClayTable.Cell>
-                  <ClayButton
-                    displayType="warning"
-                    type="button"
-                    onClick={() => data.removeItem(index)}
-                  >
-                    X
-                  </ClayButton>
-                </ClayTable.Cell>
-              </ClayTable.Row>
-            );
-          })}
-        </ClayTable.Body>
+        <ClayTable.Body>{tableMapping}</ClayTable.Body>
       </ClayTable>
     </>
   );
