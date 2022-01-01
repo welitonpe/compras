@@ -1,14 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './styles/Global.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./styles/Global.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { GlobalData } from "./Context/GlobalContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <GlobalData>
+      <App />
+    </GlobalData>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
