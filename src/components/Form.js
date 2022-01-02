@@ -15,8 +15,8 @@ const Form = () => {
             placeholder="Produto"
             type="text"
             className="text-center"
-            onChange={data.handleChange}
-            value={data.produto.product}
+            onChange={data?.handleChange}
+            value={data?.produto?.product}
           />
 
           {/* MAIS TARDE PODE SER IMPLEMENTADO UM SELECT NO LUCAR OU UM SEARCH}
@@ -35,12 +35,12 @@ const Form = () => {
             placeholder="R$"
             type="number"
             className="text-center"
-            onChange={data.handleChange}
+            onChange={data?.handleChange}
             name="unitValue"
             min="0.00"
             max="10000.00"
             step="0.01"
-            value={data.produto.unitValue.toLocaleString("pt-BR", {
+            value={data?.produto?.unitValue.toLocaleString("pt-BR", {
               style: "currency",
               currency: "BRL",
             })}
@@ -51,8 +51,8 @@ const Form = () => {
             name="quantity"
             placeholder={"quantidade"}
             type="number"
-            value={data.produto.quantity}
-            onChange={data.handleChange}
+            value={data?.produto?.quantity}
+            onChange={data?.handleChange}
             className="text-center"
             disabled
           />
@@ -62,7 +62,7 @@ const Form = () => {
             name="quantity"
             displayType="secondary"
             type="button"
-            onClick={data.menos}
+            onClick={data?.menos}
           >
             -
           </ClayButton>
@@ -72,7 +72,7 @@ const Form = () => {
             name="quantity"
             displayType="secondary"
             type="button"
-            onClick={data.mais}
+            onClick={data?.mais}
           >
             +
           </ClayButton>
@@ -81,7 +81,7 @@ const Form = () => {
           <ClayButton
             displayType="success"
             type="button"
-            onClick={data.addProduct}
+            onClick={data?.addProduct}
           >
             AD
           </ClayButton>

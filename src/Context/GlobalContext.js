@@ -21,10 +21,14 @@ export const GlobalData = ({ children }) => {
     if (list.length === 0) {
       setTotalValues(values);
     }
-    list.map((product) => {
-      values += product.totalValue;
-      return setTotalValues(values);
-    });
+    for (const valor in list) {
+      values += list[valor].totalValue;
+    }
+    setTotalValues(values);
+    // list.map((product) => {
+    //   values += product.totalValue;
+    //   return setTotalValues(values);
+    // });
   }, [list]);
 
   function handleChange({ target }) {

@@ -4,29 +4,37 @@ import { GlobalContext } from "../Context/GlobalContext";
 import { useContext } from "react";
 
 const ItemTable = () => {
-  const { list, removeItem } = useContext(GlobalContext);
-  const tableMapping = list.map((element, index) => {
+  const data = useContext(GlobalContext);
+  const tableMapping = data?.list.map((element, index) => {
     return (
       <ClayTable.Row key={index}>
-        <ClayTable.Cell headingTitle>{element.product}</ClayTable.Cell>
-        <ClayTable.Cell>
+        <ClayTable.Cell
+          responsivesize={"sm"}
+          striped={"true"}
+          headingTitle
+          className="p-1 w-100"
+        >
+          {element.product}
+        </ClayTable.Cell>
+        <ClayTable.Cell className="p-1">
           {element.unitValue.toLocaleString("pt-BR", {
             style: "currency",
             currency: "BRL",
           })}
         </ClayTable.Cell>
-        <ClayTable.Cell>{element.quantity}</ClayTable.Cell>
-        <ClayTable.Cell>
+        <ClayTable.Cell className="p-1">{element.quantity}</ClayTable.Cell>
+        <ClayTable.Cell className="p-1">
           {element.totalValue.toLocaleString("pt-BR", {
             style: "currency",
             currency: "BRL",
           })}
         </ClayTable.Cell>
-        <ClayTable.Cell>
+        <ClayTable.Cell className="p-1">
           <ClayButton
+            className="btn-sm"
             displayType="warning"
             type="button"
-            onClick={() => removeItem(index)}
+            onClick={() => data?.removeItem(index)}
           >
             X
           </ClayButton>
@@ -37,14 +45,24 @@ const ItemTable = () => {
   return (
     <>
       {/* {JSON.stringify(lista)} */}
-      <ClayTable>
+      <ClayTable striped responsiveSize="true" borderedColumns>
         <ClayTable.Head>
           <ClayTable.Row>
-            <ClayTable.Cell headingCell>{"Desc"}</ClayTable.Cell>
-            <ClayTable.Cell headingCell>{"V.Unit"}</ClayTable.Cell>
-            <ClayTable.Cell headingCell>{"Qtd"}</ClayTable.Cell>
-            <ClayTable.Cell headingCell>{"V.Ttoal"}</ClayTable.Cell>
-            <ClayTable.Cell headingCell>{"Remove"}</ClayTable.Cell>
+            <ClayTable.Cell headingCell className="text-center">
+              {"Desc"}
+            </ClayTable.Cell>
+            <ClayTable.Cell headingCell className="text-center">
+              {"V.Unit"}
+            </ClayTable.Cell>
+            <ClayTable.Cell headingCell className="text-center">
+              {"Qtd"}
+            </ClayTable.Cell>
+            <ClayTable.Cell headingCell className="text-center">
+              {"V.Ttoal"}
+            </ClayTable.Cell>
+            <ClayTable.Cell headingCell className="text-center">
+              {"Remove"}
+            </ClayTable.Cell>
           </ClayTable.Row>
         </ClayTable.Head>
         <ClayTable.Body>{tableMapping}</ClayTable.Body>
