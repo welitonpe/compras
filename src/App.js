@@ -2,10 +2,8 @@ import "@clayui/css/lib/css/atlas.css";
 import ClayLayout from "@clayui/layout";
 import ClayAlert from "@clayui/alert";
 import Form from "./components/Form";
-import { GlobalData } from "./Context/GlobalContext";
 import ItemTable from "./components/ItemTable";
-import { initialState } from "./Constants/InitialSatate";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { GlobalContext } from "./Context/GlobalContext";
 
 function App() {
@@ -13,7 +11,7 @@ function App() {
   return (
     <>
       <div className="App">
-        <ClayLayout.ContainerFluid view className="fixed">
+        <ClayLayout.ContainerFluid view className="fixed-top mb-5">
           <ClayAlert
             displayType="warning"
             spritemap={"!"}
@@ -29,11 +27,11 @@ function App() {
           </ClayAlert>
         </ClayLayout.ContainerFluid>
 
-        <ClayLayout.ContainerFluid view>
+        <ClayLayout.ContainerFluid view className="mt-6 fixed-top">
           <Form></Form>
         </ClayLayout.ContainerFluid>
 
-        <ClayLayout.ContainerFluid view>
+        <ClayLayout.ContainerFluid view className="mt-8">
           <ItemTable lista={data?.list} onRemove={data?.removeItem} />
         </ClayLayout.ContainerFluid>
       </div>

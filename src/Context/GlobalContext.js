@@ -21,25 +21,26 @@ export const GlobalData = ({ children }) => {
     if (list.length === 0) {
       setTotalValues(values);
     }
-    for (const valor in list) {
-      values += list[valor].totalValue;
-    }
-    setTotalValues(values);
-    // list.map((product) => {
-    //   values += product.totalValue;
-    //   return setTotalValues(values);
-    // });
+
+    list.map((product) => {
+      values += product.totalValue;
+      return setTotalValues(values);
+    });
   }, [list]);
 
   function handleChange({ target }) {
     const { name, value } = target;
-
-    setProduto({ ...produto, [name]: value });
+    if (typeof value === "number") {
+      setProduto({ ...produto, [name]: parseInt(value) });
+    }
+    if (typeof value === "string") {
+      setProduto({ ...produto, [name]: value });
+    }
   }
 
   function mais() {
     if (produto.quantity >= 0) {
-      setProduto({ ...produto, quantity: produto.quantity + 1 });
+      setProduto({ ...produto, quantity: parseInt(produto.quantity + 1) });
     }
   }
 

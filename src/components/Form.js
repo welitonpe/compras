@@ -1,8 +1,7 @@
-import ClayForm, { ClayInput, ClaySelect } from "@clayui/form";
+import ClayForm, { ClayInput } from "@clayui/form";
 import ClayButton from "@clayui/button";
-import { useEffect, useState, useContext } from "react";
-import { initialState } from "../Constants/InitialSatate";
-import { GlobalContext, GlobalData } from "../Context/GlobalContext";
+import { useContext } from "react";
+import { GlobalContext } from "../Context/GlobalContext";
 const Form = () => {
   const data = useContext(GlobalContext);
 
@@ -51,10 +50,9 @@ const Form = () => {
             name="quantity"
             placeholder={"quantidade"}
             type="number"
-            value={data?.produto?.quantity}
+            value={parseInt(data?.produto?.quantity)}
             onChange={data?.handleChange}
             className="text-center"
-            disabled
           />
         </ClayInput.GroupItem>
         <ClayInput.GroupItem shrink prepend className="">
