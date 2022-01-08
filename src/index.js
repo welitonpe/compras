@@ -4,11 +4,13 @@ import "./styles/Global.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { GlobalData } from "./Context/GlobalContext";
+import Home from './Home'
 
 ReactDOM.render(
   <GlobalData>
     <React.StrictMode>
-      <App />
+      <Home />
+      {/* <App /> */}
     </React.StrictMode>
   </GlobalData>,
   document.getElementById("root")

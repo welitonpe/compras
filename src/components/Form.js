@@ -17,17 +17,6 @@ const Form = () => {
             onChange={data?.handleChange}
             value={data?.produto?.product}
           />
-
-          {/* MAIS TARDE PODE SER IMPLEMENTADO UM SELECT NO LUCAR OU UM SEARCH}
-      {/* <ClaySelect aria-label="Select Label" id="mySelectId">
-      {options.map((item) => (
-        <ClaySelect.Option
-          key={item.value}
-          label={item.label}
-          value={item.value}
-        />
-      ))}
-    </ClaySelect> */}
         </ClayInput.GroupItem>
         <ClayInput.GroupItem prepend>
           <ClayInput
